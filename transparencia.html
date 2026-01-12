@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transparência - ASEB</title>
+    <style>
+        /* --- VARIÁVEIS DA ID. VISUAL ASEB --- */
+        :root {
+            --primary-color: #046bd2; /* Azul ASEB */
+            --primary-dark: #0356a8;
+            --text-color: #334155;
+            --bg-light: #F0F5FA;
+            --white: #ffffff;
+            --border-color: #e2e8f0;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: var(--font-main);
+            color: var(--text-color);
+            line-height: 1.6;
+            background-color: var(--bg-light);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        a { text-decoration: none; transition: 0.3s; }
+        ul { list-style: none; }
+
+        /* --- CABEÇALHO (Igual à Home) --- */
+        header {
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links { display: flex; gap: 20px; }
+        .nav-links a { color: var(--text-color); font-weight: 500; font-size: 16px; }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary-color); }
+        
+        .btn-nav {
+            padding: 8px 20px;
+            border: 2px solid var(--primary-color);
+            border-radius: 50px; /* Borda arredondada moderna */
+            color: var(--primary-color) !important;
+            font-weight: 700 !important;
+        }
+        .btn-nav:hover {
+            background: var(--primary-color);
+            color: var(--white) !important;
+        }
+
+        /* --- ÁREA DE TRANSPARÊNCIA --- */
+        .page-header {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 60px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-header h1 { font-size: 36px; margin-bottom: 10px; }
+        .page-header p { font-size: 18px; opacity: 0.9; }
+
+        /* ACORDEÃO (ESTILO ELEMENTOR) */
+        .accordion-container {
+            max-width: 900px;
+            margin: 0 auto 60px auto;
+        }
+
+        .accordion-item {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .accordion-header {
+            background: var(--white);
+            padding: 20px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 18px;
+            transition: background 0.3s;
+        }
+
+        .accordion-header:hover {
+            background: #f8fafc;
+        }
+
+        .accordion-header::after {
+            content: '+'; /* Ícone de mais */
+            font-size: 24px;
+            font-weight: 400;
+            color: #94a3b8;
+        }
+
+        /* Estado Ativo (Aberto) */
+        .accordion-item.active .accordion-header {
+            background: #f1f5f9;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .accordion-item.active .accordion-header::after {
+            content: '-'; /* Muda para menos */
+        }
+
+        .accordion-content {
+            display: none; /* Escondido por padrão */
+            padding: 25px;
+            background: var(--white);
+        }
+
+        .accordion-item.active .accordion-content {
+            display: block; /* Aparece quando ativo */
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* LISTA DE DOCUMENTOS DENTRO DO ACORDEÃO */
+        .doc-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .doc-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+
+        .doc-card:hover {
+            border-color: var(--primary-color);
+            transform: translateX(5px);
+        }
+
+        .doc-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .icon-pdf {
+            font-size: 24px;
+            color: #e74c3c; /* Cor de PDF */
+        }
+
+        .doc-title {
+            font-weight: 600;
+            color: var(--text-color);
+            font-size: 15px;
+        }
+
+        .btn-download {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .btn-download:hover { background-color: var(--primary-dark); }
+
+        /* --- RODAPÉ --- */
+        footer {
+            background-color: #1e293b;
+            color: #94a3b8;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: auto;
+            font-size: 14px;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .navbar { flex-direction: column; height: auto; padding: 20px; }
+            .nav-links { flex-direction: column; gap: 15px; margin-top: 15px; text-align: center; }
+            .doc-card { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .btn-download { width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container navbar">
+            <a href="index.html" class="logo">ASEB</a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="aseb.org.html">Home</a></li>
+                    <li><a href="aseb.org.html">Quem Somos</a></li>
+                    <li><a href="aseb.org.html">Ações e Projetos</a></li>
+                    <li><a href="aseb.org.html">Contatos</a></li>
+                    <li><a href="transparencia.html">Transparência</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Portal da Transparência</h1>
+            <p>Prestação de contas e documentos institucionais da ASEB</p>
+        </div>
+    </section>
+
+    <div class="container accordion-container">
+        
+        <div class="accordion-item active"> <div class="accordion-header" onclick="toggleAccordion(this)">
+                Documentos Institucionais
+            </div>
+            <div class="accordion-content">
+                <div class="doc-list">
+                    <div class="doc-card">
+                        <div class="doc-info">
+                            <span class="icon-pdf">📄</span>
+                            <span class="doc-title">Estatuto Social da ASEB (2025) e Ata de Eleição e Posse</span>
+                        </div>
+                        <a href="https://drive.google.com/file/d/1rTma2RJOdFB2cMrASzdopuQHakk9tWS4/view?usp=sharing" class="btn-download">Baixar ⬇</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                Termos de Fomento e Parcerias
+            </div>
+            <div class="accordion-content">
+                <div class="doc-list">
+                    <div class="doc-card">
+                        <div class="doc-info">
+                            <span class="icon-pdf">🤝</span>
+                            <span class="doc-title">Termo de Fomento Nº 975373/2025 - Ministério da Mulher  </span>
+                        </div>
+                        <a href="https://drive.google.com/file/d/1Qs3PdVfRokWfdwG9fJ8X4_ZiHhmMcfCx/view?usp=sharing" class="btn-download">acessar ⬇</a>
+                    </div>
+                    <div class="doc-card">
+                        <div class="doc-info">
+                            <span class="icon-pdf">🤝</span>
+                            <span class="doc-title">Termo de Fomento Nº 011199/2023 - Ministério do Esporte</span>
+                        </div>
+                        <a href="https://drive.google.com/file/d/1u67rTtRi1vtonXLdEJrwvBYXFI8K4PLG/view?usp=sharing" class="btn-download">acessar ⬇</a>
+                    </div>
+                    <div class="doc-card">
+                        <div class="doc-info">
+                            <span class="icon-pdf">🤝</span>
+                            <span class="doc-title">Termo de Fomento Nº 005090/2024 - Fundação Cultura Palmares</span>
+                        </div>
+                        <a href="https://drive.google.com/file/d/1oBgVF6ACwvjsGVcG2Kc8WxVuaewRb-SP/view?usp=sharing" class="btn-download">acessar ⬇</a>
+                    </div>
+                    <div class="doc-card">
+                        <div class="doc-info">
+                            <span class="icon-pdf">🤝</span>
+                            <span class="doc-title">Termo de fomento Nº 000746/2024 - Ministério dos Direitos humanos e Cidadania</span>
+                        </div>
+                        <a href="https://drive.google.com/file/d/15GWW91Bp9fN1FtuxREzVDE3W9fdIfGwE/view?usp=sharing" class="btn-download">acessar ⬇</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>Copyright © 2026 ASEB - Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleAccordion(element) {
+            // Pega o pai (o item inteiro)
+            const item = element.parentElement;
+            
+            // Verifica se já está aberto
+            const isActive = item.classList.contains('active');
+
+            // Fecha todos os outros (opcional - se quiser que fique só um aberto por vez)
+            /* document.querySelectorAll('.accordion-item').forEach(i => {
+                i.classList.remove('active');
+            });
+            */
+
+            // Se não estava aberto, abre. Se estava, fecha.
+            if (!isActive) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Associação Esportivo Brasília - ASEB</title>
+    <style>
+        /* --- RESET BÁSICO E VARIÁVEIS --- */
+        :root {
+            --primary-color: #046bd2; /* Azul do site original */
+            --text-color: #334155;
+            --bg-light: #F0F5FA;
+            --white: #ffffff;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: var(--font-main);
+            color: var(--text-color);
+            line-height: 1.6;
+            background-color: var(--white);
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+
+        /* --- CABEÇALHO (HEADER) --- */
+        header {
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+/* --- BANNER SIMPLES (SÓ IMAGEM) --- */
+        #banner-simples {
+            width: 100%; /* Ocupa a largura total */
+            line-height: 0; /* Remove espacinhos brancos indesejados abaixo da imagem */
+            background-color: var(--bg-light); /* Cor de fundo caso a imagem demore a carregar */
+        }
+
+        .img-banner-full {
+            width: 100%;       /* Estica para ocupar a largura da tela */
+            height: auto;      /* A altura se ajusta sozinha para não deformar a foto */
+            display: block;    /* Garante que comporte como bloco */
+            max-height: 500px; /* (Opcional) Limita a altura em telas gigantes para não ocupar tudo */
+            object-fit: cover; /* Se atingir a altura máxima, corta as bordas suavemente */
+        }
+
+        /* Ajuste para celular */
+        @media (max-width: 768px) {
+            .img-banner-full {
+                /* No celular, removemos o limite de altura para ver a imagem toda */
+                max-height: none; 
+            }
+        }
+
+        .btn-banner:hover {
+            background-color: #e6900a;
+            transform: scale(1.05);
+        }
+
+        /* Ajuste para celular */
+        @media (max-width: 768px) {
+            #banner-principal { height: 400px; }
+            .banner-logo { max-width: 200px; }
+            .banner-content h1 { font-size: 24px; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            /* Aqui você colocaria sua imagem depois: <img src="logo.png"> */
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            font-size: 16px;
+        }
+
+        .nav-links a:hover { color: var(--primary-color); }
+
+        /* Botão de destaque no menu */
+        .btn-nav {
+            padding: 8px 15px;
+            border: 2px solid var(--primary-color);
+            border-radius: 4px;
+            color: var(--primary-color);
+        }
+        .btn-nav:hover {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        /* --- SEÇÕES GERAIS --- */
+        section {
+            padding: 60px 0;
+        }
+
+        h2 {
+            font-size: 32px;
+            color: #1e293b;
+            margin-bottom: 20px;
+            text-align: center; /* Títulos centralizados como no original */
+        }
+
+        /* --- QUEM SOMOS --- */
+        #quem-somos {
+            background-color: var(--white);
+            text-align: justify;
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+/* --- AÇÕES E PROJETOS --- */
+        #projetos {
+            background-color: var(--bg-light);
+        }
+		/* --- GALERIA DE FOTOS (MURAL) --- */
+        #galeria {
+            background-color: var(--white); /* Fundo branco para diferenciar */
+            padding-top: 40px;
+        }
+
+        .photo-grid {
+            display: grid;
+            /* Cria colunas automáticas com largura mínima de 200px */
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+            gap: 15px; /* Espaço entre as fotos */
+            margin-top: 30px;
+        }
+
+        .photo-item {
+            height: 200px; /* Altura fixa para ficar tudo quadrado/retangular igual */
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Garante que a foto preencha o quadrado sem esticar/deformar */
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        /* Efeito de Zoom ao passar o mouse */
+        .photo-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .container {
+            /* Garantindo que o container mantenha o alinhamento */
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsivo automático */
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .project-card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden; /* Garante que a imagem não saia da borda redonda */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%; /* Faz todos os cards terem a mesma altura */
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px); /* Sobe um pouquinho */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 220px; /* Altura fixa para alinhar as fotos */
+            object-fit: cover; /* Corta a imagem para preencher sem esticar */
+        }
+
+        .card-content {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1; /* Ocupa o espaço restante */
+        }
+
+        .card-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 12px;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .card-content p {
+            font-size: 15px;
+            color: #64748b;
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+
+        /* --- DOAÇÃO (FORMULÁRIO) --- */
+        #doacao {
+            background-color: var(--white);
+        }
+
+        .donation-box {
+            max-width: 600px;
+            margin: 0 auto;
+            border: 1px solid #ddd;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .form-group { margin-bottom: 15px; }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .btn-submit {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        .btn-submit:hover { background-color: #0356a8; }
+
+        /* --- CONTATOS --- */
+        #contatos {
+            background-color: var(--bg-light);
+            text-align: center;
+        }
+
+        .contact-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            font-size: 18px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* --- RODAPÉ --- */
+        footer {
+            background-color: #1e293b; /* Cor escura */
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: auto;
+        }
+
+        /* --- RESPONSIVIDADE (CELULAR) --- */
+        @media (max-width: 768px) {
+            .navbar { flex-direction: column; height: auto; padding: 15px 0; }
+            .nav-links { flex-direction: column; gap: 10px; margin-top: 15px; text-align: center; }
+            .gallery-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container navbar">
+            <div class="logo">ASEB</div> <nav>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#quem-somos">Quem Somos</a></li>
+                    <li><a href="#projetos">Ações e Projetos</a></li>
+                    <li><a href="#contatos">Contatos</a></li>
+                    <li><a href="transparencia.html">Transparência</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+	</header> <section id="banner-principal">
+<section id="banner-simples">
+        <img src="img/banner.png" alt="Banner Principal ASEB" class="img-banner-full">
+    </section>
+
+    <section id="quem-somos">
+
+    <section id="quem-somos">
+        <div class="container">
+            <h2>Quem Somos</h2>
+            <div class="about-content">
+                <p>
+                    A <strong>ASEB</strong> nasceu com a missão de proporcionar
+oportunidades pra que crianças e jovens possam construir
+um futuro promissor e equitativo, apoiados no esporte, na
+educação e na formação de valores de cidadania.
+
+    A visão da ASEB é ser um agente transformador,
+promovendo uma sociedade mais justa, inclusa e auto
+sustentável por meio do desenvolvimento integral das
+pessoas que atende.
+                </p>
+                <br>
+                <p>
+                    Trabalhando em parceria com empresas, profissionais e voluntários dedicados, valorizamos a diversidade e acreditamos no potencial humano como alicerces para a mudança. Na ASEB, não apenas criamos oportunidades concretas, mas também cultivamos um ambiente acolhedor.
+                </p>
+            </div>
+        </div>
+    </section>
+
+<section id="projetos">
+        <div class="container">
+            <h2>Ações e Projetos</h2>
+            
+            <div class="projects-grid">
+                
+                <article class="project-card">
+                    <img src="img/artevida.jpg" alt="Aulão ENEM" class="card-image">
+                    <div class="card-content">
+                        <h3>Arte e Vida em Movimento</h3>
+                        <p>
+                            O Projeto Arte e Vida em Movimento 2023 é um
+projeto que combina esporte, cultura e bem
+estar , promovendo atividades que incentivam a
+saúde física e mental, além da expressão
+artística. Voltado para públicos diversos, o
+projeto oferece um espaço acolhedor para
+mulheres, idosas e jovens, promovendo inclusão
+social e fortalecimento comunitário.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="project-card">
+                    <img src="img/futeboltodos.png" alt="Xadrez" class="card-image">
+                    <div class="card-content">
+                        <h3>Futebol Para Todos</h3>
+                        <p>
+                            O Projeto Futebol Para Todos utiliza o esporte
+como ferramenta de desenvolvimento social,
+oferecendo uma formação que vai além do
+futebol, promovendo valores como trabalho em
+equipe, disciplina e respeito. O projeto é voltado
+para todas as idades e gêneros, visando
+fortalecer os laços comunitários e proporcionar
+um espaço de aprendizado e crescimento
+pessoal.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="project-card">
+                    <img src="img/voandoalto.jpg" alt="Idosos no Celular" class="card-image">
+                    <div class="card-content">
+                        <h3>Voando Alto</h3>
+                        <p>
+                            Com o Projeto Voando Alto, a ASEB investe
+na criação de núcleos de formação,
+garantindo acompanhamento técnico e
+pedagógico para jovens atletas. Esse
+programa abrange habilidades técnicas
+como coordenação motora e fundamentos
+do futebol, e sociais, como convivência e
+liderança. A parceria com o Ministério dos
+Esportes fortalece o compromisso da ASEB
+em oferecer uma formação continua e
+mensurável, com impacto direto na vida dos
+participantes.
+                        </p>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+        <div class="container">
+            
+            <div class="projects-grid">
+                
+                <article class="project-card">
+                    <img src="img/vivendobem.jpg" alt="" class="card-image">
+                    <div class="card-content">
+                        <h3>Baile Vivendo Bem Para Envelhecer Melhor</h3>
+                        <p>
+                            O projeto "Vivendo Bem para Envelhecer Melhor", idealizado pela Associação Esportivo Brasília (ASEB), consolida-se como uma importante iniciativa de inclusão social e promoção da qualidade de vida para a terceira idade. Com foco nas regiões de Sobradinho II e Fercal, no Distrito Federal, a ação tem como meta atender cerca de 100 idosos, oferecendo suporte integral para que tenham um envelhecimento mais ativo, saudável e digno.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="project-card">
+                    <img src="img/aje.png" alt="Xadrez" class="card-image">
+                    <div class="card-content">
+                        <h3><a href="https://www.facebook.com/media/set/?set=a.1042555857907346&type=3">Projeto Arte, Ajeume Samba -Cultura e
+Sustentabilidade nas práticas dos Terreiros pelo Clima</a> </h3>
+                        <p>
+O projeto "Arte, Ajeum e Samba - Cultura e Sustentabilidade nas práticas dos Terreiros pelo Clima" configura-se como uma iniciativa cultural e socioambiental estratégica, realizada pela Associação Esportivo Brasília (ASEB) com o fomento da Fundação Cultural Palmares. A proposta atua na interseção entre a preservação das tradições de matriz africana e a urgência da pauta climática, reconhecendo os terreiros e espaços culturais periféricos não apenas como locais de fé, mas como polos de resistência, preservação patrimonial e educação ecológica.
+                        </p>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+	<section id="galeria">
+        <div class="container">
+            <h2>Galeria de Momentos</h2>
+            
+            <div class="photo-grid">
+                
+                <div class="photo-item">
+                    <img src="img/artevida 1.jpg" alt="Foto da ASEB">
+                </div>
+
+                <div class="photo-item">
+                    <img src="img/artevida.jpg" alt="Foto da ASEB">
+                </div>
+
+                <div class="photo-item">
+                    <img src="img/artevida10.jpg" alt="Foto da ASEB">
+                </div>
+
+                <div class="photo-item">
+                    <img src="img/artevida11.jpg" alt="Foto da ASEB">
+                </div>
+
+                <div class="photo-item">
+                    <img src="img/artevida12.jpg" alt="Foto da ASEB">
+                </div>
+
+                <div class="photo-item"><img src="img/artevida13.jpg" alt="Foto"></div>
+                <div class="photo-item"><img src="img/artevida14.jpg" alt="Foto"></div>
+                <div class="photo-item"><img src="img/artevida2.jpg" alt="Foto"></div>
+                <div class="photo-item"><img src="img/artevida3.jpg" alt="Foto"></div>
+                <div class="photo-item"><img src="img/artevida4.jpg" alt="Foto"></div>
+                <div class="photo-item"><img src="img/artevida6.jpg" alt="Foto"></div>
+                <div class="photo-item"><img src="img/artevida7.jpg" alt="Foto"></div>
+                <div class="photo-item"><img src="img/artevida9.jpg" alt="Foto"></div>
+                <div class="photo-item"><img src="img/artevidaa.jpg" alt="Foto"></div>
+                <div class="photo-item"><img src="img/forro1.jpg" alt="Foto"></div>
+                <div class="photo-item"><img src="img/forro10.jpg" alt="Foto"></div>
+                <div class="photo-item"><img src="img/forro11.jpg" alt="Foto"></div>
+                <div class="photo-item"><img src="img/forro12.jpg" alt="Foto"></div>
+                <div class="photo-item"><img src="img/forro2.jpg" alt="Foto"></div>
+                <div class="photo-item"><img src="img/forro3.jpg" alt="Foto"></div>
+                <div class="photo-item"><img src="img/forro4.jpg" alt="Foto"></div>
+                <div class="photo-item"><img src="img/forro5.jpg" alt="Foto"></div>
+                <div class="photo-item"><img src="img/forro6.jpg" alt="Foto"></div>
+                <div class="photo-item"><img src="img/forro7.jpg" alt="Foto"></div>
+                <div class="photo-item"><img src="img/forro8.jpg" alt="Foto"></div>
+                <div class="photo-item"><img src="img/forro9.jpg" alt="Foto"></div>
+                <div class="photo-item"><img src="img/aje.jpg" alt="Foto"></div>
+                <div class="photo-item"><img src="img/aje.png" alt="Foto"></div>
+                <div class="photo-item"><img src="img/aje1.png" alt="Foto"></div>
+                <div class="photo-item"><img src="img/aje10000.jpg" alt="Foto"></div>
+                <div class="photo-item"><img src="img/aje14.png" alt="Foto"></div>
+                <div class="photo-item"><img src="img/aje2.png" alt="Foto"></div>
+                <div class="photo-item"><img src="img/aje4.png" alt="Foto"></div>
+                <div class="photo-item"><img src="img/aje5.png" alt="Foto"></div>
+                <div class="photo-item"><img src="img/ajeeeee.png" alt="Foto"></div>
+                <div class="photo-item"><img src="img/fut1.png" alt="Foto"></div>
+                <div class="photo-item"><img src="img/fut10.jpg" alt="Foto"></div>
+                <div class="photo-item"><img src="img/fut12.jpg" alt="Foto"></div>
+                <div class="photo-item"><img src="img/fut2.jpg" alt="Foto"></div>
+                <div class="photo-item"><img src="img/fut3.jpg" alt="Foto"></div>
+                <div class="photo-item"><img src="img/fut4.png" alt="Foto"></div>
+                <div class="photo-item"><img src="img/fut6.jpg" alt="Foto"></div>
+                <div class="photo-item"><img src="img/fut7.jpg" alt="Foto"></div>
+                <div class="photo-item"><img src="img/fut8.jpg" alt="Foto"></div>
+                <div class="photo-item"><img src="img/fut9.jpg" alt="Foto"></div>
+			
+                </div>
+        </div>
+    </section>
+
+    <section id="contatos">
+        <div class="container">
+            <h2>Contatos</h2>
+            <div class="contact-list">
+                <div class="contact-item">
+                    <span>📧</span> <strong>esportivabrasilia.2023@gmail.com</strong>
+                </div>
+                <div class="contact-item">
+                    <span>📞</span>
+                    <strong>(61) 98679-6822</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>Copyright © 2026 ASEB | Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
